@@ -1,4 +1,4 @@
-package com.application.isradeleon.notifyexample;
+package com.application.meow.notify;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.application.isradeleon.notifyexample", appContext.getPackageName());
+        assertEquals("com.application.meow.notify.test", appContext.getPackageName());
     }
 }

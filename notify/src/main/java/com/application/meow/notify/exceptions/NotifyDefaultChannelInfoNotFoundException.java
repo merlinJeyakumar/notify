@@ -1,8 +1,8 @@
-package com.application.isradeleon.notify.exceptions;
+package com.application.meow.notify.exceptions;
 
 import android.content.res.Resources.NotFoundException;
 
-import com.application.isradeleon.notify.Notify;
+import com.application.meow.notify.Notify;
 
 public class NotifyDefaultChannelInfoNotFoundException extends NotFoundException {
     public NotifyDefaultChannelInfoNotFoundException(){}

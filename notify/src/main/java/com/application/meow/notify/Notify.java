@@ -1,4 +1,4 @@
-package com.application.isradeleon.notify;
+package com.application.meow.notify;
 
 import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
@@ -22,9 +22,9 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.application.isradeleon.notify.helpers.BitmapHelper;
+import com.application.meow.notify.helpers.BitmapHelper;
 
-import static com.application.isradeleon.notify.helpers.ResourcesHelper.getStringResourceByKey;
+import static com.application.meow.notify.helpers.ResourcesHelper.getStringResourceByKey;
 
 public class Notify {
     public NotificationCompat.Builder getNotificationBuilder() {

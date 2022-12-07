@@ -1,4 +1,4 @@
-package com.application.isradeleon.notify.helpers;
+package com.application.meow.notify.helpers;
 
 import android.content.Context;
 import android.graphics.Bitmap;

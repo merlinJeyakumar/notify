@@ -1,9 +1,9 @@
-package com.application.isradeleon.notifyexample;
+package com.application.meow.notifyexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.application.isradeleon.notify.Notify;
+import com.application.meow.notify.Notify;
 
 public class MainActivity extends AppCompatActivity {
 

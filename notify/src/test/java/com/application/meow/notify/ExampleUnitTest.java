@@ -1,4 +1,4 @@
-package com.application.isradeleon.notifyexample;
+package com.application.meow.notify;
 
 import org.junit.Test;
 
