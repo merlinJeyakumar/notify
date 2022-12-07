@@ -1,5 +1,5 @@
 # Notify-Android
-[![Release](https://img.shields.io/github/release/merlinJeyakumar/notify.svg)](https://jitpack.io/#isradeleon/Notify-Android)
+[![Release](https://img.shields.io/github/release/merlinJeyakumar/notify.svg)](https://jitpack.io/#merlinJeyakumar/notify)
 [![API](https://img.shields.io/badge/support-API%2019%2B-yellow)](https://android-arsenal.com/api?level=19#l19)
 [![API](https://img.shields.io/badge/support-API%2026%2B-green)](https://android-arsenal.com/api?level=28#l19)
 
