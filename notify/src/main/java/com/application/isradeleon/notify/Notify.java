@@ -192,6 +192,108 @@ public class Notify {
         notificationManager.notify(id, builder.build());
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
+    public Notification build(){
+        if (context == null) {
+            throw new IllegalStateException("Context couldnt be null");
+        }
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(notificationManager == null) {
+            throw new IllegalStateException("notification manager should be null without notification service availability");
+        }
+
+        builder.setAutoCancel(this.autoCancel)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(smallIcon)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(content));
+
+        /*
+         * Set large icon
+         * */
+        Bitmap largeIconBitmap;
+        if (largeIcon instanceof String) largeIconBitmap = BitmapHelper.getBitmapFromUrl(String.valueOf(largeIcon));
+        else largeIconBitmap = BitmapHelper.getBitmapFromRes(this.context, (int) largeIcon);
+
+        /*
+         * Circular large icon for chat messages
+         * */
+        if (largeIconBitmap != null){
+            if (this.circle)
+                largeIconBitmap = BitmapHelper.toCircleBitmap(largeIconBitmap);
+            builder.setLargeIcon(largeIconBitmap);
+        }
+
+        /*
+         * Set notification color
+         * */
+        if(picture != null){
+            Bitmap pictureBitmap;
+            if (picture instanceof String) pictureBitmap = BitmapHelper.getBitmapFromUrl(String.valueOf(picture));
+            else pictureBitmap = BitmapHelper.getBitmapFromRes(this.context, (int) picture);
+
+            if (pictureBitmap != null){
+                NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle().bigPicture(pictureBitmap).setSummaryText(content);
+                bigPictureStyle.bigLargeIcon(largeIconBitmap);
+                builder.setStyle(bigPictureStyle);
+            }
+        }
+
+        /*
+        * Set notification color
+        * */
+        int realColor;
+        if (SDK_INT >= M) realColor = color == -1 ? Color.BLACK : context.getResources().getColor(color, null);
+        else realColor = color == -1 ? Color.BLACK : context.getResources().getColor(color);
+        builder.setColor(realColor);
+
+        /*
+        * Oreo^ notification channels
+        * */
+        if (SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    channelId, channelName, oreoImportance
+            );
+            notificationChannel.setDescription(this.channelDescription);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(realColor);
+            notificationChannel.enableVibration(this.vibration);
+            notificationChannel.setVibrationPattern(this.vibrationPattern);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }else{
+            builder.setPriority(this.importance);
+        }
+
+        /*
+        * Set vibration pattern
+        * */
+        if (this.vibration) builder.setVibrate(this.vibrationPattern);
+        else builder.setVibrate(new long[]{0});
+
+        /*
+        * Action triggered when user clicks noti
+        * */
+        if(this.action != null){
+            PendingIntent pi;
+            if (SDK_INT >= M)
+                pi = PendingIntent.getActivity(context, id, this.action,
+                        FLAG_CANCEL_CURRENT | FLAG_IMMUTABLE);
+            else pi = PendingIntent.getActivity(context, id,
+                    this.action, FLAG_CANCEL_CURRENT);
+            builder.setContentIntent(pi);
+        }
+
+        /*
+        * Show built notification
+        * */
+        //notificationManager.notify(id, builder.build());
+        return builder.build();
+    }
+
     public Notify setTitle(@NonNull CharSequence title) {
         this.title = title;
         return this;
