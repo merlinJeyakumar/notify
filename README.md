@@ -1,5 +1,5 @@
 # Notify-Android
-[![Release](https://img.shields.io/github/release/isradeleon/Notify-Android.svg)](https://jitpack.io/#isradeleon/Notify-Android)
+[![Release](https://img.shields.io/github/release/merlinJeyakumar/notify.svg)](https://jitpack.io/#isradeleon/Notify-Android)
 [![API](https://img.shields.io/badge/support-API%2019%2B-yellow)](https://android-arsenal.com/api?level=19#l19)
 [![API](https://img.shields.io/badge/support-API%2026%2B-green)](https://android-arsenal.com/api?level=28#l19)
 
@@ -25,7 +25,7 @@ allprojects {
 Include the dependency in your app build.gradle:
 ```gradle
 dependencies {
-    implementation 'com.github.isradeleon:Notify-Android:1.0.5' // updated for Android X
+    implementation 'com.github.merlinJeyakumar:notify:1.0.5' // updated for Android X
 }
 ```
 
@@ -55,7 +55,7 @@ protected void onCreate(Bundle savedInstanceState) {
         /*
          * Set notification title and content
          * */
-        .setTitle("Jill Zhao")
+        .setTitle("Hey am, JeyK")
         .setContent("Hi! So I meet you today?")
 
         /*
