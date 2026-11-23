@@ -1,115 +1,81 @@
-# Notify-Android
-[![Release](https://img.shields.io/github/release/merlinJeyakumar/notify.svg)](https://jitpack.io/#merlinJeyakumar/notify)
-[![API](https://img.shields.io/badge/support-API%2019%2B-yellow)](https://android-arsenal.com/api?level=19#l19)
-[![API](https://img.shields.io/badge/support-API%2026%2B-green)](https://android-arsenal.com/api?level=28#l19)
+# Notify Android
 
-Android library that simplifies creating & showing app notifications. Change the notification's icon or add a circular image or a picture to the notification using the Notify class.
+Notify Android is a Java Android library for creating and displaying application notifications through a compact builder-style flow. It is useful when an app needs to configure notification content, channels, actions, icons, images, and cancellation behavior without repeating the same setup across screens.
 
-<p align="center">
-    <img src="preview1.jpeg">
-    <img src="preview2.jpeg">
-</p>
+## What it can do
 
-## Installation
+- Create and show a notification with a title, message, colour, and notification ID.
+- Configure auto-cancel behavior and an action intent for a notification tap.
+- Use a small icon, large icon, circular large icon, or big-picture image.
+- Use image resources already bundled with the app.
+- Accept image URLs for large-image and big-picture presentation.
+- Configure notification-channel ID, name, and description.
+- Set notification importance and vibration behavior.
+- Build a notification before posting it.
+- Cancel one notification by ID.
+- Cancel all notifications created by the app.
 
-Add jitpack.io to your root build.gradle:
-```gradle
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
+## Notification channels
+
+On Android versions that use notification channels, Notify can create and configure a channel from the values supplied to the builder.
+
+Channel configuration includes:
+
+- Channel ID
+- Channel name
+- Channel description
+- Importance
+- Vibration enablement and vibration pattern
+
+If the expected default channel string resources are not available, the library falls back to built-in defaults.
+
+## Images and presentation
+
+| Presentation | Supported use |
+| --- | --- |
+| Small icon | Standard notification status-bar icon. |
+| Large icon | Larger image shown in the notification content. |
+| Circular large icon | Rounded profile-style image. |
+| Big picture | Expanded notification image. |
+| Resource image | Image packaged with the Android application. |
+| URL image | Image supplied from a remote URL. |
+
+## Use from source
+
+The reusable Android library module is `notify`.
+
+1. Clone this repository or include the `notify` module in an existing Android build.
+2. Add the module as a project dependency.
+3. Configure a small icon, notification content, and a channel where the target Android version requires one.
+4. Request runtime notification permission from the host app where Android requires it.
+
+Build the library module from the repository root:
+
+```bash
+./gradlew :notify:assembleDebug
 ```
 
-Include the dependency in your app build.gradle:
-```gradle
-dependencies {
-    implementation 'com.github.merlinJeyakumar:notify:1.0.5' // updated for Android X
-}
+On Windows:
+
+```bat
+gradlew.bat :notify:assembleDebug
 ```
 
-## Notification channel for API >= 26
+## Project layout
 
-You may need to add the default notification channel to your app/res/values/strings.xml file:
-```xml
-<resources>
+| Path | Purpose |
+| --- | --- |
+| `notify/` | Reusable notification builder library. |
+| `app/` | Sample app that demonstrates notification images, icons, and posting behavior. |
 
-    <string translatable="false" name="notify_channel_id">MyDefaultChannelID</string>
+## Current scope
 
-    <string translatable="false" name="notify_channel_name">MyDefaultChannelName</string>
-
-    <string translatable="false" name="notify_channel_description">MyDefaultChannelDescription</string>
-
-</resources>
-```
-
-## Basic usage
-
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-
-    Notify.build(getApplicationContext())
-
-        /*
-         * Set notification title and content
-         * */
-        .setTitle("Hey am, JeyK")
-        .setContent("Hi! So I meet you today?")
-
-        /*
-         * Set small icon from drawable resource
-         * */
-        .setSmallIcon(R.drawable.ic_notifications_none_white_24dp)
-        .setColor(R.color.colorPrimary)
-
-        /*
-         * Set notification large icon from drawable resource or URL
-         * (make sure you added INTERNET permission to AndroidManifest.xml)
-         * */
-        .setLargeIcon("https://images.pexels.com/photos/139829/pexels-photo-139829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=150&w=440")
-
-        /*
-         * Circular large icon
-         * */
-        .largeCircularIcon()
-
-        /*
-         * Add a picture from drawable resource or URL
-         * (INTERNET permission needs to be added to AndroidManifest.xml)
-         * */
-        .setPicture("https://images.pexels.com/photos/1058683/pexels-photo-1058683.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-
-        .show(); // Show notification
-}
-```
-
-## Methods
-
-| Method | Description |
-|------------------------------------|--------------------------|
-| **Notify.build(context)** | Create a Notify object |
-| **setId(id)** | Set the identifier for the notification |
-| **setTitle(title)** | Set the notification title |
-| **setContent(content)** | Set the notification content |
-| **setImportance(importance)** | Handle the importance with NotifyImportance |
-| **setLargeIcon(largeIcon)** | Set the large icon from a drawable or URL resource |
-| **largeCircularIcon()** | Make large icon circular |
-| **setSmallIcon(smallIcon)** | Set the small icon from a drawable resource |
-| **setPicture(picture)** | Set a picture from a drawable or URL resource |
-| **setChannelId(id)** | Set the notification channel id |
-| **setChannelName(name)** | Set the notification channel name |
-| **setChannelDescription(description)** | Set the notification channel description |
-| **setAutoCancel(autoCancel)** | Set the auto-cancel value |
-| **setAction(intent)** | Set the action for when user clicks the notification  |
-| **enableVibration(vibration)** | Enable or disable the vibration |
-| **setVibrationPattern(vibrationPattern)** | Set the vibration pattern |
-| **getNotificationBuilder()** | Return the native NotificationCompat.Builder object |
-| **show()** | Show the notification |
-| **cancel(context, id)** | Cancel the specified notification by id |
-| **cancelAll(context)** | Cancel all notifications |
+- The library is configured for Android `minSdk 19`, `compileSdk 31`, and `targetSdk 31`.
+- Android 13 and later notification permission handling belongs to the consuming application.
+- Android channel settings are controlled by the platform after a channel is created; later builder changes may not update a user’s existing channel settings.
+- URL-based images are fetched synchronously by the current implementation. Prepare remote images carefully and avoid treating this path as asynchronous image loading.
+- The repository’s automated tests are basic scaffold tests; validate notification permission, channel, image, and action behavior in the host application.
 
 ## License
 
-This library is licensed under `MIT license`. View [license](LICENSE).
+This project is distributed under the [MIT License](LICENSE).
